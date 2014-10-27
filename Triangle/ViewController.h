@@ -8,8 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ViewController : NSViewController
-
-
+@interface ViewController : NSViewController <NSTableViewDataSource>{
+    IBOutlet NSTableView *tableView;
+    NSMutableArray *shoppingListArray;
+}
+@property(strong) IBOutlet NSTableView *tableView;
+@property(strong) NSMutableArray *shoppingListArray;
 @end
 
