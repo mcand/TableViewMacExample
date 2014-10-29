@@ -7,12 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "Triangle.h"
 
-@interface ViewController : NSViewController <NSTableViewDataSource>{
+@interface ViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate>{
     IBOutlet NSTableView *tableView;
     NSMutableArray *shoppingListArray;
 }
-@property(strong) IBOutlet NSTableView *tableView;
+@property(strong) NSTableView *tableView;
 @property(strong) NSMutableArray *shoppingListArray;
 @end
 

@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <XCTest/XCTest.h>
+#import "Triangle.h"
 
 @interface TriangleTests : XCTestCase
 
@@ -25,9 +26,40 @@
     [super tearDown];
 }
 
-- (void)testExample {
+- (void)testTriangleCreation {
     // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
+    Triangle *triangle1 = [[Triangle alloc] initWithSides:3 side:4 andSide:5];
+    
+    XCTAssertEqual(triangle1.area, 6, "Triangle area should be 6.");
+    
+    XCTAssertEqualObjects(triangle1.name, @"Triangle");
+}
+
+-(void)testScaleneTriangle{
+    // This example tests a scalene example
+    Triangle *scaleneTriangle = [[Triangle alloc] initWithSides:3 side:4 andSide:5];
+    XCTAssertEqualObjects(scaleneTriangle.triangleClassification, @"Scalene Triangle", "This triangle is really scalene, that is, it has 3 different sides!");
+}
+
+-(void)testIsoscelesTriangle{
+    // This example tests an isosceles example
+    Triangle *isoscelesTriangle = [[Triangle alloc] initWithSides:20 side:20 andSide:10];
+    XCTAssertEqualObjects(isoscelesTriangle.triangleClassification, @"Isosceles Triangle", "This triangle is really isosceles, that is, it has two equal sides!");
+}
+
+-(void)testEquilateralTriangle{
+    // This example tests an equilateral triangle
+    Triangle *equilateralTriangle = [[Triangle alloc] initWithSides:10 side:10 andSide:10];
+    XCTAssertEqualObjects(equilateralTriangle.triangleClassification, @"Equilateral Triangle", "This triangle is really equilateral.");
+}
+
+-(void)testInvalidTriangle{
+    // This example tests an invalid triangle
+    Triangle *invalidTriangle = [[Triangle alloc] initWithSides:40 side:10 andSide:5];
+    XCTAssertEqualObjects(invalidTriangle.triangleClassification, @"Invalid Triangle", "This triangle does not exist.");
+    
+    // Test whether an invalid triangle has no area
+    XCTAssertEqual(invalidTriangle.area, 0, @"Invalid triangle has no area!");
 }
 
 - (void)testPerformanceExample {

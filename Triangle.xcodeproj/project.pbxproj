@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D61A887719FF32D700403E70 /* Shape.m in Sources */ = {isa = PBXBuildFile; fileRef = D61A887619FF32D700403E70 /* Shape.m */; };
+		D61A887A19FF33BD00403E70 /* Triangle.m in Sources */ = {isa = PBXBuildFile; fileRef = D61A887919FF33BD00403E70 /* Triangle.m */; };
 		D62B377719FDC24200B2DCF2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D62B377619FDC24200B2DCF2 /* AppDelegate.m */; };
 		D62B377919FDC24200B2DCF2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D62B377819FDC24200B2DCF2 /* main.m */; };
 		D62B377C19FDC24200B2DCF2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D62B377B19FDC24200B2DCF2 /* ViewController.m */; };
@@ -26,6 +28,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D61A887519FF32D700403E70 /* Shape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shape.h; sourceTree = "<group>"; };
+		D61A887619FF32D700403E70 /* Shape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shape.m; sourceTree = "<group>"; };
+		D61A887819FF33BD00403E70 /* Triangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Triangle.h; sourceTree = "<group>"; };
+		D61A887919FF33BD00403E70 /* Triangle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Triangle.m; sourceTree = "<group>"; };
 		D62B377019FDC24200B2DCF2 /* Triangle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Triangle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D62B377419FDC24200B2DCF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D62B377519FDC24200B2DCF2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -58,6 +64,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D61A886D19FF1CDF00403E70 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D61A887519FF32D700403E70 /* Shape.h */,
+				D61A887619FF32D700403E70 /* Shape.m */,
+				D61A887819FF33BD00403E70 /* Triangle.h */,
+				D61A887919FF33BD00403E70 /* Triangle.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		D62B376719FDC24200B2DCF2 = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +96,7 @@
 		D62B377219FDC24200B2DCF2 /* Triangle */ = {
 			isa = PBXGroup;
 			children = (
+				D61A886D19FF1CDF00403E70 /* Models */,
 				D62B377519FDC24200B2DCF2 /* AppDelegate.h */,
 				D62B377619FDC24200B2DCF2 /* AppDelegate.m */,
 				D62B377A19FDC24200B2DCF2 /* ViewController.h */,
@@ -215,9 +233,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D61A887A19FF33BD00403E70 /* Triangle.m in Sources */,
 				D62B377C19FDC24200B2DCF2 /* ViewController.m in Sources */,
 				D62B377919FDC24200B2DCF2 /* main.m in Sources */,
 				D62B377719FDC24200B2DCF2 /* AppDelegate.m in Sources */,
+				D61A887719FF32D700403E70 /* Shape.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,6 +424,7 @@
 				D62B379219FDC24200B2DCF2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D62B379319FDC24200B2DCF2 /* Build configuration list for PBXNativeTarget "TriangleTests" */ = {
 			isa = XCConfigurationList;
@@ -412,6 +433,7 @@
 				D62B379519FDC24200B2DCF2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
