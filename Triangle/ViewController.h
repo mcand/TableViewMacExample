@@ -13,14 +13,10 @@
     IBOutlet NSTableView *tableView;
     NSMutableArray *formsArray;
 }
-@property(nonatomic, strong) NSTableView *tableView;
+@property(nonatomic, retain) NSTableView *tableView;
 @property(nonatomic, strong) NSMutableArray *formsArray;
-//- (IBAction)openDocument:(id)sender;
-//- (BOOL)application:(NSApplication*)theApplication openFile:(NSString*)filename;
-//- (BOOL)processFile:(NSURL *)file;
--(void) triangle:(NSURL *)file;
-//- (IBAction)openExistingDocument:(id)sender;
--(void)updateTableView;
 - (IBAction)openDocument:(id)sender;
+- (void) triangle:(NSURL *)file;
+- (void)updateTableView;
 @end
 

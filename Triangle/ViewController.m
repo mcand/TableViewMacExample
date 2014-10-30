@@ -29,8 +29,7 @@
     
     // Do any additional setup after loading the view.
 }
-
-
+ 
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
 
@@ -63,19 +62,6 @@
     
 }
 
-//- (IBAction)openDocument:(id)sender{
-//    NSOpenPanel* openPanel = [NSOpenPanel openPanel];
-//
-//    [openPanel setAllowedFileTypes:[NSArray arrayWithObjects:@"tri", @"qua",nil]];
-//    NSInteger result =  [openPanel runModal];
-//    if (result == NSModalResponseOK) {
-//        [self processFile:[openPanel URL]];
-//    }
-//}
-
-
-
-
 - (IBAction)openDocument:(id)sender{
     NSOpenPanel* panel = [NSOpenPanel openPanel];
     [panel setAllowedFileTypes:[NSArray arrayWithObjects:@"tri", @"qua",nil]];
@@ -92,22 +78,6 @@
 }
 
 
-//- (BOOL)application:(NSApplication*)theApplication openFile:(NSString*)filename{
-//    
-//    return YES;
-//}
-
-//- (BOOL)processFile:(NSURL *)file
-//{
-//    NSLog(@"The following file has been dropped or selected: %@",file);
-//    
-//    [self performSelectorInBackground:@selector(triangle:) withObject:file];
-//    
-//    return YES;
-//
-//}
-
-
 -(void) triangle:(NSURL *)file{
     
         NSError *error;
@@ -116,13 +86,13 @@
     
         NSLog(@"%@", words);
     
-        NSArray* lines = [words componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+        NSArray *lines = [words componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 
         NSMutableArray *shapes = [[NSMutableArray alloc] init];
     
-        while (lines) {
+        for(int i=0; i < lines.count; i++) {
     
-            NSArray*info = [words componentsSeparatedByString:@";"];
+            NSArray*info = [lines[i] componentsSeparatedByString:@";"];
     
             // Creates triangles to be populated
             CGFloat side1 = (CGFloat)[info[0] floatValue];
@@ -141,11 +111,9 @@
 }
 
 -(void)updateTableView{
-    //NSWindow *view = [[self view] window];
-    [self.tableView reloadData];
-//    dispatch_async(dispatch_get_main_queue(), ^{
-        //ViewController *vc = [[ViewController alloc] init];
-//    });
+
+    [self.tableView reloadData];    
+
 }
 
 @end
