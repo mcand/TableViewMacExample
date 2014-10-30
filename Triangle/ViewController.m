@@ -64,31 +64,48 @@
     
 }
 
+//- (IBAction)openDocument:(id)sender{
+//    NSOpenPanel* openPanel = [NSOpenPanel openPanel];
+//
+//    [openPanel setAllowedFileTypes:[NSArray arrayWithObjects:@"tri", @"qua",nil]];
+//    NSInteger result =  [openPanel runModal];
+//    if (result == NSModalResponseOK) {
+//        [self processFile:[openPanel URL]];
+//    }
+//}
+
+
+
+
 - (IBAction)openDocument:(id)sender{
-    NSOpenPanel* openPanel = [NSOpenPanel openPanel];
+    NSOpenPanel* panel = [NSOpenPanel openPanel];
+    [panel setAllowedFileTypes:[NSArray arrayWithObjects:@"tri", @"qua",nil]];
+    
+    [panel beginWithCompletionHandler:^(NSInteger result){
+        if (result == NSFileHandlingPanelOKButton) {
+            NSURL*  file = [[panel URLs] objectAtIndex:0];
+            
+            [self performSelectorInBackground:@selector(triangle:) withObject:file];
 
-    [openPanel setAllowedFileTypes:[NSArray arrayWithObjects:@"tri", @"qua",nil]];
-    NSInteger result =  [openPanel runModal];
-    if (result == NSModalResponseOK) {
-        [self processFile:[openPanel URL]];
-    }
+        }
+        
+    }];
 }
 
+//- (BOOL)application:(NSApplication*)theApplication openFile:(NSString*)filename{
+//    
+//    return YES;
+//}
 
-- (BOOL)application:(NSApplication*)theApplication openFile:(NSString*)filename{
-    
-    return YES;
-}
-
-- (BOOL)processFile:(NSURL *)file
-{
-    NSLog(@"The following file has been dropped or selected: %@",file);
-    
-    [self performSelectorInBackground:@selector(triangle:) withObject:file];
-    
-    return YES;
-
-}
+//- (BOOL)processFile:(NSURL *)file
+//{
+//    NSLog(@"The following file has been dropped or selected: %@",file);
+//    
+//    [self performSelectorInBackground:@selector(triangle:) withObject:file];
+//    
+//    return YES;
+//
+//}
 
 
 -(void) triangle:(NSURL *)file{
@@ -104,20 +121,27 @@
         NSMutableArray *shapes = [[NSMutableArray alloc] init];
     
         while (lines) {
+    
             NSArray*info = [words componentsSeparatedByString:@";"];
-            
+    
             // Creates triangles to be populated
             CGFloat side1 = (CGFloat)[info[0] floatValue];
             CGFloat side2 = (CGFloat)[info[1] floatValue];
             CGFloat side3 = (CGFloat)[info[2] floatValue];
-    
+
             Triangle *triangle = [[Triangle alloc] initWithSides:side1 side:side2 andSide:side3];
-    
+   
             [shapes addObject:triangle];
         }
     
         self.formsArray = shapes;
     
+        [self performSelectorOnMainThread:@selector(updateTableView) withObject:nil waitUntilDone:YES];
+    
+}
+
+-(void)updateTableView{
+    [self.tableView reloadData];
 }
 
 @end
