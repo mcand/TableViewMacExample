@@ -9,11 +9,16 @@
 #import <Cocoa/Cocoa.h>
 #import "Triangle.h"
 
-@interface ViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate>{
+@interface ViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate, NSApplicationDelegate>{
     IBOutlet NSTableView *tableView;
-    NSMutableArray *shoppingListArray;
+    NSMutableArray *formsArray;
 }
 @property(strong) NSTableView *tableView;
-@property(strong) NSMutableArray *shoppingListArray;
+@property(strong) NSMutableArray *formsArray;
+- (IBAction)openDocument:(id)sender;
+- (BOOL)application:(NSApplication*)theApplication openFile:(NSString*)filename;
+//- (BOOL)processFile:(NSString *)file;
+-(void) triangle:(NSURL *)file;
+-(void)atualizarTableView;
 @end
 

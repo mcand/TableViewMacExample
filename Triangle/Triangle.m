@@ -30,7 +30,7 @@
 }
 
 -(BOOL)isValidTriangle:(Triangle *)triangle{
-    if ((triangle.sideA > fabs(triangle.sideB-triangle.sideC)) && (triangle.sideA < (triangle.sideB + triangle.sideC))) {
+    if (([triangle sideA] > fabs([triangle sideB]-[triangle sideC])) && ([triangle sideA] < ([triangle sideB] + [triangle sideC]))) {
         return YES;
     }
     return NO;
@@ -39,10 +39,10 @@
 
 -(void)setTriangleType:(Triangle *)triangle{
     if ([self isValidTriangle:triangle]) {
-        if ((triangle.sideA == triangle.sideB) && (triangle.sideA == triangle.sideC)) {
+        if (([triangle sideA] == triangle.sideB) && ([triangle sideA] == [triangle sideC])) {
             [triangle setTriangleClassification:@"Equilateral Triangle"];
         } else {
-            if ((triangle.sideA == triangle.sideB) || (triangle.sideA) == triangle.sideC) {
+            if (([triangle sideA] == [triangle sideB]) || ([triangle sideA]) == [triangle sideC]) {
                 [triangle setTriangleClassification:@"Isosceles Triangle"];
             } else{
                 [triangle setTriangleClassification:@"Scalene Triangle"];
@@ -57,9 +57,9 @@
     Triangle *triangle = (Triangle *)form;
     if ([self isValidTriangle:triangle]) {
         // calculate semi perimeter
-        CGFloat s = (triangle.sideA + triangle.sideB + triangle.sideC)/2;
+        CGFloat s = ([triangle sideA] + [triangle sideB] + [triangle sideC])/2;
 
-        CGFloat triangleArea = sqrt(s*(s - triangle.sideA)*(s - triangle.sideB)*(s - triangle.sideC));
+        CGFloat triangleArea = sqrt(s*(s - [triangle sideA])*(s - [triangle sideB])*(s - [triangle sideC]));
         
         [triangle setArea:triangleArea];
 
@@ -69,7 +69,7 @@
 }
 
 -(NSString *)getSidesOf:(Triangle *)triangle{
-    return [NSString stringWithFormat:@"%f, %f e %f", triangle.sideA, triangle.sideB, triangle.sideC];
+    return [NSString stringWithFormat:@"%f, %f e %f", [triangle sideA], [triangle sideB], [triangle sideC]];
 }
 
 

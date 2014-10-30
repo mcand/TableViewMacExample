@@ -7,28 +7,30 @@
 //
 
 #import "ViewController.h"
+#import "Triangle.h"
 
 
 @implementation ViewController
-@synthesize shoppingListArray, tableView;
+@synthesize formsArray, tableView;
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    Triangle *scaleneTriangle = [[Triangle alloc] initWithSides:3 side:4 andSide:5];
-    Triangle *isoscelesTriangle = [[Triangle alloc] initWithSides:20 side:20 andSide:10];
-    Triangle *equilateralTriangle = [[Triangle alloc] initWithSides:10 side:10 andSide:10];
-    Triangle *invalidTriangle = [[Triangle alloc] initWithSides:40 side:10 andSide:5];
-    
-    
-    self.shoppingListArray = [[NSMutableArray alloc] initWithObjects:scaleneTriangle, isoscelesTriangle, equilateralTriangle, invalidTriangle, nil];
+//    Triangle *scaleneTriangle = [[Triangle alloc] initWithSides:3 side:4 andSide:5];
+//    Triangle *isoscelesTriangle = [[Triangle alloc] initWithSides:20 side:20 andSide:10];
+//    Triangle *equilateralTriangle = [[Triangle alloc] initWithSides:10 side:10 andSide:10];
+//    Triangle *invalidTriangle = [[Triangle alloc] initWithSides:40 side:10 andSide:5];
+//    
+//    self.formsArray = [[NSMutableArray alloc] initWithObjects:scaleneTriangle, isoscelesTriangle, equilateralTriangle, invalidTriangle, nil];
 
-    [tableView setDelegate:self];
+    [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
+    
     
     // Do any additional setup after loading the view.
 }
+
 
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
@@ -37,14 +39,14 @@
 }
 
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
-    NSLog(@"%lu", self.shoppingListArray.count);
-    return [self.shoppingListArray count];
+    NSLog(@"Numeros de triangulos e %lu", self.formsArray.count);
+    return [self.formsArray count];
 }
 
 -(NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
     NSTableCellView *result = [self.tableView makeViewWithIdentifier:@"MyView" owner:self];
     
-    Triangle *triangle = [self.shoppingListArray objectAtIndex:row];
+    Triangle *triangle = [self.formsArray objectAtIndex:row];
     
     if ([tableColumn.identifier isEqualToString:@"Form"]) {
         result.textField.stringValue = triangle.name;
@@ -58,14 +60,64 @@
         result.textField.stringValue = [triangle triangleClassification];
     }
     
-//    result.name.textField.stringValue = [self.shoppingListArray objectAtIndex:row];
-    //result.textField.stringValue = triangle.name;
     return result;
     
 }
 
+- (IBAction)openDocument:(id)sender{
+    NSOpenPanel* openPanel = [NSOpenPanel openPanel];
+
+    [openPanel setAllowedFileTypes:[NSArray arrayWithObjects:@"tri", @"qua",nil]];
+    NSInteger result =  [openPanel runModal];
+    if (result == NSModalResponseOK) {
+        [self processFile:[openPanel URL]];
+    }
+}
 
 
+- (BOOL)application:(NSApplication*)theApplication openFile:(NSString*)filename{
+    
+    return YES;
+}
 
+- (BOOL)processFile:(NSURL *)file
+{
+    NSLog(@"The following file has been dropped or selected: %@",file);
+    
+    [self performSelectorInBackground:@selector(triangle:) withObject:file];
+    
+    return YES;
+
+}
+
+
+-(void) triangle:(NSURL *)file{
+    
+        NSError *error;
+    
+        NSString *words = [[NSString alloc] initWithContentsOfURL:file encoding:NSUTF8StringEncoding error:&error];
+    
+        NSLog(@"%@", words);
+    
+        NSArray* lines = [words componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+
+        NSMutableArray *shapes = [[NSMutableArray alloc] init];
+    
+        while (lines) {
+            NSArray*info = [words componentsSeparatedByString:@";"];
+            
+            // Creates triangles to be populated
+            CGFloat side1 = (CGFloat)[info[0] floatValue];
+            CGFloat side2 = (CGFloat)[info[1] floatValue];
+            CGFloat side3 = (CGFloat)[info[2] floatValue];
+    
+            Triangle *triangle = [[Triangle alloc] initWithSides:side1 side:side2 andSide:side3];
+    
+            [shapes addObject:triangle];
+        }
+    
+        self.formsArray = shapes;
+    
+}
 
 @end
