@@ -27,7 +27,6 @@
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
     
-    
     // Do any additional setup after loading the view.
 }
 
@@ -92,6 +91,7 @@
     }];
 }
 
+
 //- (BOOL)application:(NSApplication*)theApplication openFile:(NSString*)filename{
 //    
 //    return YES;
@@ -136,12 +136,16 @@
     
         self.formsArray = shapes;
     
-        [self performSelectorOnMainThread:@selector(updateTableView) withObject:nil waitUntilDone:YES];
+        [self performSelectorOnMainThread:@selector(updateTableView) withObject:nil waitUntilDone:NO];
     
 }
 
 -(void)updateTableView{
+    //NSWindow *view = [[self view] window];
     [self.tableView reloadData];
+//    dispatch_async(dispatch_get_main_queue(), ^{
+        //ViewController *vc = [[ViewController alloc] init];
+//    });
 }
 
 @end
