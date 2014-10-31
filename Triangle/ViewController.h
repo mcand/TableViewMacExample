@@ -17,6 +17,7 @@
 @property(nonatomic, strong) NSMutableArray *formsArray;
 - (IBAction)openDocument:(id)sender;
 - (void) triangle:(NSURL *)file;
+- (void) square:(NSURL *)file;
 - (void)updateTableView;
 @end
 

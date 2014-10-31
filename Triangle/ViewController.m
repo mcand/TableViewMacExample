@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "Triangle.h"
+#import "Rectangle.h"
 
 
 @implementation ViewController
@@ -44,39 +45,96 @@
 -(NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
     NSTableCellView *result = [self.tableView makeViewWithIdentifier:@"MyView" owner:self];
     
-    Triangle *triangle = [self.formsArray objectAtIndex:row];
+    Shape *shape = [self.formsArray objectAtIndex:row];
     
-    if ([tableColumn.identifier isEqualToString:@"Form"]) {
-        result.textField.stringValue = triangle.name;
-    } else if ([tableColumn.identifier isEqualToString:@"Sides"]) {
-        result.textField.stringValue = [NSString stringWithFormat:@"%.2f, %.2f e %.2f", triangle.sideA, triangle.sideB, triangle.sideC];
-    } else if ([tableColumn.identifier isEqualToString:@"ValidForm"]) {
-        result.textField.stringValue = [triangle isValidTriangle:triangle] ? @"Yes": @"No";
-    } else if ([tableColumn.identifier isEqualToString:@"Area"]) {
-        result.textField.stringValue = [NSString stringWithFormat:@"%.2f", triangle.area];
-    } else if ([tableColumn.identifier isEqualToString:@"FormType"]) {
-        result.textField.stringValue = [triangle triangleClassification];
+    if ([shape.name isEqualToString:@"Triangle"]) {
+        
+        Triangle *triangle = (Triangle *)shape;
+        
+        if ([tableColumn.identifier isEqualToString:@"Form"]) {
+            result.textField.stringValue = triangle.name;
+        } else if ([tableColumn.identifier isEqualToString:@"Sides"]) {
+            result.textField.stringValue = [NSString stringWithFormat:@"%.2f, %.2f e %.2f", triangle.sideA, triangle.sideB, triangle.sideC];
+        } else if ([tableColumn.identifier isEqualToString:@"ValidForm"]) {
+            result.textField.stringValue = [triangle isValidTriangle:triangle] ? @"Yes": @"No";
+        } else if ([tableColumn.identifier isEqualToString:@"Area"]) {
+            result.textField.stringValue = [NSString stringWithFormat:@"%.2f", triangle.area];
+        } else if ([tableColumn.identifier isEqualToString:@"FormType"]) {
+            result.textField.stringValue = [triangle triangleClassification];
+        }
+    } else {
+
+        Rectangle *rectangle = (Rectangle *)shape;
+        
+        if ([tableColumn.identifier isEqualToString:@"Form"]) {
+            result.textField.stringValue = rectangle.name;
+        } else if ([tableColumn.identifier isEqualToString:@"Sides"]) {
+            result.textField.stringValue = [NSString stringWithFormat:@"%.2f e %.2f", rectangle.sideA, rectangle.sideB];
+        } else if ([tableColumn.identifier isEqualToString:@"ValidForm"]) {
+            result.textField.stringValue = @"Yes";
+        } else if ([tableColumn.identifier isEqualToString:@"Area"]) {
+            result.textField.stringValue = [NSString stringWithFormat:@"%.2f", rectangle.area];
+        } else if ([tableColumn.identifier isEqualToString:@"FormType"]) {
+            result.textField.stringValue = [rectangle rectangleClassification];
+        }
+        
     }
     
+
     return result;
     
 }
 
 - (IBAction)openDocument:(id)sender{
     NSOpenPanel* panel = [NSOpenPanel openPanel];
-    [panel setAllowedFileTypes:[NSArray arrayWithObjects:@"tri", @"qua",nil]];
+    [panel setAllowedFileTypes:[NSArray arrayWithObjects:@"tri", @"sqa",nil]];
     
     [panel beginWithCompletionHandler:^(NSInteger result){
         if (result == NSFileHandlingPanelOKButton) {
             NSURL*  file = [[panel URLs] objectAtIndex:0];
             
-            [self performSelectorInBackground:@selector(triangle:) withObject:file];
+            if ([[file pathExtension] isEqualToString:@"tri"]) {
+                [self performSelectorInBackground:@selector(triangle:) withObject:file];
+            } else {
+                if ([[file pathExtension] isEqualToString:@"sqa"]){
+                    [self performSelectorInBackground:@selector(square:) withObject:file];
+                }
+            }
+            
 
         }
         
     }];
 }
 
+- (void) square:(NSURL *)file{
+    NSError *error;
+    
+    NSString *words = [[NSString alloc] initWithContentsOfURL:file encoding:NSUTF8StringEncoding error:&error];
+    
+    NSLog(@"%@", words);
+    
+    NSArray *lines = [words componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    
+    NSMutableArray *shapes = [[NSMutableArray alloc] init];
+    
+    for(int i=0; i < lines.count; i++) {
+        
+        NSArray*info = [lines[i] componentsSeparatedByString:@";"];
+        
+        // Creates triangles to be populated
+        CGFloat side1 = (CGFloat)[info[0] floatValue];
+        CGFloat side2 = (CGFloat)[info[1] floatValue];
+        
+        Rectangle *rectangle = [[Rectangle alloc] initWithSides:side1 side:side2];
+        
+        [shapes addObject:rectangle];
+    }
+    
+    self.formsArray = shapes;
+    
+    [self performSelectorOnMainThread:@selector(updateTableView) withObject:nil waitUntilDone:NO];
+}
 
 -(void) triangle:(NSURL *)file{
     
