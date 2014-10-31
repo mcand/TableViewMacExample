@@ -107,6 +107,8 @@
     }];
 }
 
+#pragma mark To do: Refatorar esse método para ficar reutilizavel, pois faz muita coisa igual ao triangle
+
 - (void) square:(NSURL *)file{
     NSError *error;
     
@@ -136,6 +138,7 @@
     [self performSelectorOnMainThread:@selector(updateTableView) withObject:nil waitUntilDone:NO];
 }
 
+#pragma mark To do: Refatorar esse método para ficar reutilizavel, pois faz muita coisa igual ao rectangle
 -(void) triangle:(NSURL *)file{
     
         NSError *error;
@@ -167,6 +170,8 @@
         [self performSelectorOnMainThread:@selector(updateTableView) withObject:nil waitUntilDone:NO];
     
 }
+
+#pragma mark
 
 -(void)updateTableView{
 
