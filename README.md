@@ -4,6 +4,9 @@ TableViewMacExample
 NSTableView Mac Example
 
 
+This is a simple OS X application that shows how to open a document and how to present informations on a NSTableView.
+
+
 This program read a file with an extension .tri (for a triangle) or a .sqa(for a rectangle) and then prints informations about the geometric forms within the file.
 
 An example of a .tri triangle would be:
