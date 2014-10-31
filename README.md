@@ -12,7 +12,9 @@ This program reads a file with a .tri (for a triangle) or a .sqa(for a rectangle
 An example of a .tri file for a triangle would be:
 
 4;4;4
+
 1;2;3
+
 3;4;5
 
 
@@ -22,5 +24,6 @@ Note that you have to use ";" to separate the sides
 An example of .sqa rectangle would be:
 
 3;4
+
 2;2
 
